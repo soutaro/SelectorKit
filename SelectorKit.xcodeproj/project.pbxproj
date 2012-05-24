@@ -16,6 +16,10 @@
 		AB65FDEB156E7BAC00923C53 /* SelectorKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDEA156E7BAC00923C53 /* SelectorKitTests.m */; };
 		AB65FDF6156E7BD900923C53 /* STLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = AB65FDF4156E7BD900923C53 /* STLexer.h */; };
 		AB65FDF7156E7BD900923C53 /* STLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDF5156E7BD900923C53 /* STLexer.m */; };
+		AB65FDFA156E90CA00923C53 /* STSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = AB65FDF8156E90CA00923C53 /* STSelector.h */; };
+		AB65FDFB156E90CA00923C53 /* STSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDF9156E90CA00923C53 /* STSelector.m */; };
+		AB65FDFE156E950F00923C53 /* STParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AB65FDFC156E950F00923C53 /* STParser.h */; };
+		AB65FDFF156E950F00923C53 /* STParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDFD156E950F00923C53 /* STParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +46,10 @@
 		AB65FDEA156E7BAC00923C53 /* SelectorKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectorKitTests.m; sourceTree = "<group>"; };
 		AB65FDF4156E7BD900923C53 /* STLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLexer.h; sourceTree = "<group>"; };
 		AB65FDF5156E7BD900923C53 /* STLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STLexer.m; sourceTree = "<group>"; };
+		AB65FDF8156E90CA00923C53 /* STSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSelector.h; sourceTree = "<group>"; };
+		AB65FDF9156E90CA00923C53 /* STSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSelector.m; sourceTree = "<group>"; };
+		AB65FDFC156E950F00923C53 /* STParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STParser.h; sourceTree = "<group>"; };
+		AB65FDFD156E950F00923C53 /* STParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +111,10 @@
 				AB65FDD0156E7BAC00923C53 /* Supporting Files */,
 				AB65FDF4156E7BD900923C53 /* STLexer.h */,
 				AB65FDF5156E7BD900923C53 /* STLexer.m */,
+				AB65FDF8156E90CA00923C53 /* STSelector.h */,
+				AB65FDF9156E90CA00923C53 /* STSelector.m */,
+				AB65FDFC156E950F00923C53 /* STParser.h */,
+				AB65FDFD156E950F00923C53 /* STParser.m */,
 			);
 			path = SelectorKit;
 			sourceTree = "<group>";
@@ -142,6 +154,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB65FDF6156E7BD900923C53 /* STLexer.h in Headers */,
+				AB65FDFA156E90CA00923C53 /* STSelector.h in Headers */,
+				AB65FDFE156E950F00923C53 /* STParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +257,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB65FDF7156E7BD900923C53 /* STLexer.m in Sources */,
+				AB65FDFB156E90CA00923C53 /* STSelector.m in Sources */,
+				AB65FDFF156E950F00923C53 /* STParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

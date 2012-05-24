@@ -7,7 +7,7 @@
 //
 
 #import "SelectorKitTests.h"
-#import "STLexer.h"
+#import "STParser.h"
 
 @implementation SelectorKitTests
 
@@ -63,6 +63,20 @@
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_String value:@"good"], @"good", nil);
 	
 	STAssertEquals([lexer eof], YES, nil);
+}
+
+- (void)testParser {
+	NSString* source = @"UILabel:nth-child(3)[text=Hello]";
+	STLexer* lexer = [[STLexer alloc] initWithString:source];
+	STParser* parser = [STParser newParserWithLexer:lexer];
+	
+	STSelector* expectedSelector = [[STSelector alloc] init];
+	expectedSelector.className = @"UILabel";
+	expectedSelector.pseudoClasses = [NSArray arrayWithObject:[STPseudoClass newPseudoClassWithType:STC_NthChild index:3]];
+	expectedSelector.attributeSelectors = [NSArray arrayWithObject:[STAttributeSelector newAttributeSelectorWithType:STA_Equal name:@"text" value:@"Hello"]];
+	
+	STSelector* selector = [parser parseSelectorWithParent:nil];
+	STAssertEqualObjects(expectedSelector, selector, nil);
 }
 
 @end
