@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		AB65FDCE156E7BAC00923C53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB65FDCD156E7BAC00923C53 /* Foundation.framework */; };
-		AB65FDD4156E7BAC00923C53 /* SelectorKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDD3156E7BAC00923C53 /* SelectorKit.m */; };
 		AB65FDDC156E7BAC00923C53 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB65FDDB156E7BAC00923C53 /* SenTestingKit.framework */; };
 		AB65FDDE156E7BAC00923C53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB65FDDD156E7BAC00923C53 /* UIKit.framework */; };
 		AB65FDDF156E7BAC00923C53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB65FDCD156E7BAC00923C53 /* Foundation.framework */; };
 		AB65FDE2156E7BAC00923C53 /* libSelectorKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB65FDCA156E7BAC00923C53 /* libSelectorKit.a */; };
 		AB65FDE8156E7BAC00923C53 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB65FDE6156E7BAC00923C53 /* InfoPlist.strings */; };
 		AB65FDEB156E7BAC00923C53 /* SelectorKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDEA156E7BAC00923C53 /* SelectorKitTests.m */; };
+		AB65FDF6156E7BD900923C53 /* STLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = AB65FDF4156E7BD900923C53 /* STLexer.h */; };
+		AB65FDF7156E7BD900923C53 /* STLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65FDF5156E7BD900923C53 /* STLexer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,16 +31,17 @@
 /* Begin PBXFileReference section */
 		AB65FDCA156E7BAC00923C53 /* libSelectorKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSelectorKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB65FDCD156E7BAC00923C53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		AB65FDD1156E7BAC00923C53 /* SelectorKit-Prefix.pch */ = {isa = PBXFileReference; path = "SelectorKit-Prefix.pch"; sourceTree = "<group>"; };
-		AB65FDD2156E7BAC00923C53 /* SelectorKit.h */ = {isa = PBXFileReference; path = SelectorKit.h; sourceTree = "<group>"; };
-		AB65FDD3156E7BAC00923C53 /* SelectorKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectorKit.m; sourceTree = "<group>"; };
+		AB65FDD1156E7BAC00923C53 /* SelectorKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SelectorKit-Prefix.pch"; sourceTree = "<group>"; };
+		AB65FDD2156E7BAC00923C53 /* SelectorKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectorKit.h; sourceTree = "<group>"; };
 		AB65FDDA156E7BAC00923C53 /* SelectorKitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelectorKitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB65FDDB156E7BAC00923C53 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		AB65FDDD156E7BAC00923C53 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		AB65FDE5156E7BAC00923C53 /* SelectorKitTests-Info.plist */ = {isa = PBXFileReference; path = "SelectorKitTests-Info.plist"; sourceTree = "<group>"; };
+		AB65FDE5156E7BAC00923C53 /* SelectorKitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SelectorKitTests-Info.plist"; sourceTree = "<group>"; };
 		AB65FDE7156E7BAC00923C53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AB65FDE9156E7BAC00923C53 /* SelectorKitTests.h */ = {isa = PBXFileReference; path = SelectorKitTests.h; sourceTree = "<group>"; };
+		AB65FDE9156E7BAC00923C53 /* SelectorKitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectorKitTests.h; sourceTree = "<group>"; };
 		AB65FDEA156E7BAC00923C53 /* SelectorKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectorKitTests.m; sourceTree = "<group>"; };
+		AB65FDF4156E7BD900923C53 /* STLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLexer.h; sourceTree = "<group>"; };
+		AB65FDF5156E7BD900923C53 /* STLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STLexer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,8 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				AB65FDD2156E7BAC00923C53 /* SelectorKit.h */,
-				AB65FDD3156E7BAC00923C53 /* SelectorKit.m */,
 				AB65FDD0156E7BAC00923C53 /* Supporting Files */,
+				AB65FDF4156E7BD900923C53 /* STLexer.h */,
+				AB65FDF5156E7BD900923C53 /* STLexer.m */,
 			);
 			path = SelectorKit;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB65FDF6156E7BD900923C53 /* STLexer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB65FDD4156E7BAC00923C53 /* SelectorKit.m in Sources */,
+				AB65FDF7156E7BD900923C53 /* STLexer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
