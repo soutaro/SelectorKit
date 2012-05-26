@@ -8,25 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-	STC_FirstChild,
-	STC_NthChild,
-	STC_LastChild,
-	STC_NthOfType,
-	STC_Not,
-} STPseudoClassType;
-
 @class STSelector;
 
 @interface STPseudoClass : NSObject
 
-@property (nonatomic) STPseudoClassType type;
+@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSArray* params;
 
-@property (nonatomic) NSUInteger index;
-@property (nonatomic, strong) STSelector* selector;
-
-+ (STPseudoClass*)newPseudoClassWithType:(STPseudoClassType)type index:(NSUInteger)index;
-+ (STPseudoClass*)newPseudoClassWithType:(STPseudoClassType)type selector:(STSelector*)selector;
++ (STPseudoClass*)newPseudoClassWithType:(NSString*)name params:(NSArray*)params;
 
 @end
 

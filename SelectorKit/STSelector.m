@@ -9,29 +9,18 @@
 #import "STSelector.h"
 
 @implementation STPseudoClass {
-	STPseudoClassType type_;
-	NSUInteger index_;
-	STSelector* selector_;
+	NSString* name_;
+	NSArray* params_;
 }
 
-@synthesize type=type_;
-@synthesize index=index_;
-@synthesize selector=selector_;
+@synthesize name=name_;
+@synthesize params=params_;
 
-+ (STPseudoClass *)newPseudoClassWithType:(STPseudoClassType)type index:(NSUInteger)index {
++ (STPseudoClass *)newPseudoClassWithType:(NSString *)name params:(NSArray *)params {
 	STPseudoClass* klass = [[STPseudoClass alloc] init];
 	
-	klass.type = type;
-	klass.index = index;
-	
-	return klass;
-}
-
-+ (STPseudoClass *)newPseudoClassWithType:(STPseudoClassType)type selector:(STSelector *)selector {
-	STPseudoClass* klass = [[STPseudoClass alloc] init];
-	
-	klass.type = type;
-	klass.selector = selector;
+	klass.name = name;
+	klass.params = params;
 	
 	return klass;
 }
@@ -43,30 +32,20 @@
 	
 	STPseudoClass* klass = (STPseudoClass*)object;
 	
-	if (klass.type != self.type) return NO;
-	if (klass.index != self.index) return NO;
+	if (![klass.name isEqual:self.name]) return NO;
 	
-	if (klass.selector == nil && self.selector == nil) return YES;
-	return [klass.selector isEqual:self.selector];
+	if (klass.params == nil && self.params == nil) return YES;
+	return [klass.params isEqual:self.params];
 }
 
 - (NSString *)description {
-	switch (self.type) {
-		case STC_FirstChild:
-			return @"first-child";
-			break;
-		case STC_LastChild:
-			return @"last-child";
-		case STC_NthChild:
-			return [NSString stringWithFormat:@"nth-child(%d)", self.index];
-		case STC_NthOfType:
-			return [NSString stringWithFormat:@"nth-of-type(%d)", self.index];
-		case STC_Not:
-			return [NSString stringWithFormat:@"not(%@)", self.selector];
-		default:
-			break;
+	if (self.params.count > 0) {
+		return [NSString stringWithFormat:@"%@(%@)",
+				self.name,
+				[self.params componentsJoinedByString:@", "]];
+	} else {
+		return self.name;
 	}
-	return @"";
 }
 
 @end
@@ -188,6 +167,10 @@
 	}
 	if (self.parentType == STP_Parent) {
 		[result appendString:@"> "];
+	}
+	
+	if (self.isExactClassName) {
+		[result appendString:@"<:"];
 	}
 	
 	[result appendString:self.className];

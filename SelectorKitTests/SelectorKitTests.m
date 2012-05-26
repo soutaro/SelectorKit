@@ -27,7 +27,7 @@
 
 - (void)testLexer
 {
-	NSString* source = @"UIButton#close-button[isHidden=false]> :()123not.,*=^=$=true false truely falsey\"hello'world\"'good'";
+	NSString* source = @"UIButton#close-button[isHidden=false]> :()nil 123not.,*=^=$=true false truely falsey\"hello'world\"'good' <:UIView";
 	
 	STLexer* lexer = [[STLexer alloc] initWithString:source];
 	
@@ -43,6 +43,7 @@
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Colon], @":", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_LParen], @"(", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Rparen], @")", nil);
+	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Nil], @"nil", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Number value:@"123"], @"123", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Not], @"not", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Dot], @".", nil);
@@ -57,18 +58,20 @@
 	
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_String value:@"hello'world"], @"hello'world", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_String value:@"good"], @"good", nil);
+	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_LtColon], @"<:", nil);
+	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Ident value:@"UIView"], @"UIView", nil);
 	
 	STAssertEquals([lexer eof], YES, nil);
 }
 
 - (void)testParser {
-	NSString* source = @"UILabel:nth-child(3)[text=Hello]";
+	NSString* source = @"<:UILabel:nth-child(3)[text=Hello]";
 	STLexer* lexer = [[STLexer alloc] initWithString:source];
 	STParser* parser = [STParser newParserWithLexer:lexer];
 	
 	STSelector* expectedSelector = [[STSelector alloc] init];
 	expectedSelector.className = @"UILabel";
-	expectedSelector.pseudoClasses = [NSArray arrayWithObject:[STPseudoClass newPseudoClassWithType:STC_NthChild index:3]];
+	expectedSelector.pseudoClasses = [NSArray arrayWithObject:[STPseudoClass newPseudoClassWithType:@"nth-child" params:[NSArray arrayWithObject:[NSNumber numberWithInt:3]]]];
 	expectedSelector.attributeSelectors = [NSArray arrayWithObject:[STAttributeSelector newAttributeSelectorWithType:STA_Equal name:@"text" value:@"Hello"]];
 	
 	STSelector* selector = [parser parseSelectorWithParent:nil];

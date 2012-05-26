@@ -20,6 +20,7 @@
 - (STSelector*)parseSelectorComponent;
 
 - (STPseudoClass*)parsePseudoClass;
+- (NSArray*)parsePseudClassParams;
 
 - (STAttributeSelector*)parseAttributeSelector;
 - (NSArray*)parseAttributeSelectors;

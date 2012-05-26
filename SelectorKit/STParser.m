@@ -85,6 +85,13 @@
 - (STSelector *)parseSelectorComponent {
 	NSString* className = @"*";
 	
+	BOOL isExact = YES;
+	
+	if (self.nextToken.type == STT_LtColon) {
+		isExact = NO;
+		[self advanceToken];
+	}
+	
 	if (self.nextToken.type == STT_Ident) {
 		className = self.nextToken.value;
 		[self advanceToken];
@@ -130,6 +137,7 @@
 	
 	STSelector* selector = [[STSelector alloc] init];
 	selector.className = className;
+	selector.isExactClassName = isExact;
 	selector.attributeSelectors = attributes;
 	selector.pseudoClasses = pseudoClasses;
 	selector.identifier = identifier;
@@ -145,32 +153,39 @@
 	NSString* name = self.nextToken.value;
 	[self advanceToken];
 	
-	STPseudoClassType type;
-	
-	if ([name isEqualToString:@"first-child"]) {
-		return [STPseudoClass newPseudoClassWithType:STC_FirstChild index:0];
-	} else if ([name isEqualToString:@"last-child"]) {
-		return [STPseudoClass newPseudoClassWithType:STC_LastChild index:0];
-	} else if ([name isEqualToString:@"nth-child"]) {
-		type = STC_NthChild;
-	} else if ([name isEqualToString:@"nth-of-type"]) {
-		type = STC_NthOfType;
-	} else if ([name isEqualToString:@"not"]) {
-		type = STC_Not;
-		[self assertTokenTypeAndAdvance:STT_LParen];
-		STSelector* selector = [self parseSelectorWithParent:nil];
-		[self assertTokenTypeAndAdvance:STT_Rparen];
-		return [STPseudoClass newPseudoClassWithType:STC_Not selector:selector];
-	} else {
-		assert(NO);
+	NSArray* params;
+	if (self.nextToken.type == STT_LParen) {
+		params = [self parsePseudClassParams];
 	}
 	
+	return [STPseudoClass newPseudoClassWithType:name params:params];
+}
+
+- (NSArray *)parsePseudClassParams {
 	[self assertTokenTypeAndAdvance:STT_LParen];
-	[self assertTokenType:STT_Number];
-	STPseudoClass* klass = [STPseudoClass newPseudoClassWithType:type index:[self.nextToken.value intValue]];
-	[self advanceToken];
+	
+	NSMutableArray* params = [NSMutableArray new];
+	
+	while (self.nextToken.type != STT_Rparen) {
+		if (self.nextToken.type == STT_Number) {
+			[params addObject:[NSNumber numberWithInt:[self.nextToken.value intValue]]];
+		}
+		if (self.nextToken.type == STT_True) {
+			[params addObject:[NSNumber numberWithBool:YES]];
+		}
+		if (self.nextToken.type == STT_False) {
+			[params addObject:[NSNumber numberWithBool:NO]];
+		}
+		[self advanceToken];
+		
+		if (self.nextToken.type == STT_Comma) {
+			[self advanceToken];
+		}
+	}
+	
 	[self assertTokenTypeAndAdvance:STT_Rparen];
-	return klass;
+	
+	return params;
 }
 
 - (STAttributeSelector *)parseAttributeSelector {

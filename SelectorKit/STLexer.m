@@ -93,6 +93,9 @@
 		if ([matchToken_ isEqualToString:@"not"]) {
 			return [STToken newTokenWithType:STT_Not];
 		}
+		if ([matchToken_ isEqualToString:@"nil"]) {
+			return [STToken newTokenWithType:STT_Nil];
+		}
 		return [STToken newTokenWithType:STT_Ident value:matchToken_];
 	}
 	
@@ -108,6 +111,7 @@
 		return [STToken newTokenWithType:STT_Number	value:matchToken_];
 	}
 	
+	TestLiteral(@"<:", STT_LtColon);
 	TestLiteral(@"#", STT_Hash);
 	TestLiteral(@"[", STT_LBracket);
 	TestLiteral(@"]", STT_RBracket);
