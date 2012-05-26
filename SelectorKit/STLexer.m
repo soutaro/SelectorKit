@@ -46,6 +46,8 @@
 - (BOOL)startsWithRegex:(NSString*)regex;
 - (BOOL)startsWithLiteral:(NSString*)literal;
 
+- (void)skipSpaces;
+
 @end
 
 @implementation STLexer {
@@ -75,12 +77,10 @@
 }
 
 - (STToken *)nextToken {
+	[self skipSpaces];
+	
 	if (self.eof) {
 		return nil;
-	}
-	
-	if ([self startsWithRegex:@" +"]) {
-		return [STToken newTokenWithType:STT_Space];
 	}
 	
 	if ([self startsWithRegex:@"[A-Za-z][A-Za-z0-9-_]*"]) {
@@ -131,6 +131,15 @@
 
 - (BOOL)eof {
 	return [string_ length] == 0;
+}
+
+- (void)skipSpaces {
+	if (self.eof) return;
+	
+	NSRange range = [string_ rangeOfString:@" +" options:NSRegularExpressionSearch | NSAnchoredSearch];
+	if (range.location == NSNotFound) return;
+
+	[string_ replaceCharactersInRange:range withString:@""];
 }
 
 - (BOOL)startsWithRegex:(NSString *)regex {

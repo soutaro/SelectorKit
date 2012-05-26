@@ -14,8 +14,6 @@
 @property (nonatomic, retain) STLexer* lexer;
 
 - (void)advanceToken;
-- (void)advanceTokenIfSpace;
-- (void)advanceTokenAndSpace;
 - (void)assertTokenTypeAndAdvance:(STTokenType)type;
 - (void)assertTokenType:(STTokenType)type;
 
@@ -39,17 +37,6 @@
 	self.nextToken = [self.lexer nextToken];
 }
 
-- (void)advanceTokenAndSpace {
-	[self advanceToken];
-	[self advanceTokenIfSpace];
-}
-
-- (void)advanceTokenIfSpace {
-	if (self.nextToken.type == STT_Space) {
-		[self advanceToken];
-	}
-}
-
 - (void)assertTokenTypeAndAdvance:(STTokenType)type {
 	[self assertTokenType:type];
 	[self advanceToken];
@@ -62,8 +49,6 @@
 }
 
 - (STSelector *)parseSelectorWithParent:(STSelector *)parent {
-	[self advanceTokenIfSpace];
-	
 	if (self.lexer.eof) {
 		return parent;
 	}
@@ -90,8 +75,6 @@
 			break;
 	}
 	
-	[self advanceTokenIfSpace];
-
 	STSelector* selector = [self parseSelectorComponent];
 	selector.parentType = type;
 	selector.parent = parent;
@@ -104,10 +87,10 @@
 	
 	if (self.nextToken.type == STT_Ident) {
 		className = self.nextToken.value;
-		[self advanceTokenAndSpace];
+		[self advanceToken];
 	} else if (self.nextToken.type == STT_Star) {
 		className = @"*";
-		[self advanceTokenAndSpace];
+		[self advanceToken];
 	}
 	
 	NSMutableArray* attributes = [NSMutableArray new];
@@ -116,7 +99,7 @@
 	while (self.nextToken.type == STT_LBracket || self.nextToken.type == STT_Colon) {
 		switch (self.nextToken.type) {
 			case STT_LBracket: {
-				[self advanceTokenAndSpace];
+				[self advanceToken];
 				NSArray* attrs = [self parseAttributeSelectors];
 				[self assertTokenTypeAndAdvance:STT_RBracket];
 				[self advanceToken];
@@ -124,17 +107,13 @@
 				break;
 			}
 			case STT_Colon: {
-				[self advanceTokenAndSpace];
+				[self advanceToken];
 				STPseudoClass* klass = [self parsePseudoClass];
 				[pseudoClasses addObject:klass];
 				break;
 			}
 			default:
 				assert(NO);
-		}
-		
-		if (self.nextToken.type == STT_Space) {
-			break;
 		}
 	}
 	
@@ -148,8 +127,6 @@
 			abort();
 		}
 	}
-	
-	[self advanceTokenIfSpace];
 	
 	STSelector* selector = [[STSelector alloc] init];
 	selector.className = className;
@@ -205,7 +182,7 @@
 	
 	STAttributeType type = STA_Exist;
 	
-	[self advanceTokenAndSpace];
+	[self advanceToken];
 	
 	switch (self.nextToken.type) {
 		case STT_EQ:
@@ -225,11 +202,11 @@
 			break;
 	}
 	
-	[self advanceTokenAndSpace];
+	[self advanceToken];
 	
 	if (self.nextToken.type == STT_String || self.nextToken.type == STT_Ident) {
 		NSString* value = self.nextToken.value;
-		[self advanceTokenAndSpace];
+		[self advanceToken];
 		return [STAttributeSelector newAttributeSelectorWithType:type name:attributeName value:value];
 	}
 	
@@ -242,10 +219,9 @@
 	while (self.nextToken.type == STT_Ident) {
 		STAttributeSelector* selector = [self parseAttributeSelector];
 		[result addObject:selector];
-		[self advanceTokenIfSpace];
 		
 		if (self.nextToken.type == STT_Comma) {
-			[self advanceTokenAndSpace];
+			[self advanceToken];
 		}
 	}
 	

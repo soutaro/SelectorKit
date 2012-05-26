@@ -55,8 +55,6 @@ typedef enum {
 	STT_False,
 	/** > **/
 	STT_GT,
-	/**  **/
-	STT_Space,
 } STTokenType;
 
 @interface STToken : NSObject

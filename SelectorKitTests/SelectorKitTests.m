@@ -40,7 +40,6 @@
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_False], @"false",nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_RBracket], @"]", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_GT], @">", nil);
-	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Space], @" ", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Colon], @":", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_LParen], @"(", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Rparen], @")", nil);
@@ -52,11 +51,8 @@
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_HatEQ], @"^=", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_DollarEQ], @"$=", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_True], @"true", nil);
-	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Space], @" ", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_False], @"false", nil);
-	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Space], @" ", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Ident value:@"truely"], @"truely", nil);
-	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Space], @" ", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Ident value:@"falsey"], @"falsey", nil);
 	
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_String value:@"hello'world"], @"hello'world", nil);
