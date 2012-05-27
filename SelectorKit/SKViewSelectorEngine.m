@@ -12,6 +12,7 @@
 
 - (BOOL)testClassOfView:(UIView*)view selector:(STSelector*)selector;
 - (BOOL)testAttributesOfView:(UIView*)view attributeSelector:(STAttributeSelector*)attr;
+- (BOOL)testPseudoClassOfView:(UIView*)view selector:(STSelector*)selector;
 
 - (BOOL)testAttributesOfView:(UIView *)view attributeSelector:(STAttributeSelector*)attr;
 
@@ -64,6 +65,10 @@
 		}
 	}
 	
+	if (![self testPseudoClassOfView:view selector:selector]) {
+		return NO;
+	}
+	
 	return YES;
 }
 
@@ -110,6 +115,49 @@
 	} else {
 		return [view isKindOfClass:NSClassFromString(className)];
 	}
+}
+
+- (BOOL)testPseudoClassOfView:(UIView *)view selector:(STSelector *)selector {
+	if (selector.pseudoClasses.count == 0) return YES;
+	
+	NSArray* siblings = view.superview.subviews;
+	
+	for (STPseudoClass* pc in selector.pseudoClasses) {
+		if ([pc.name isEqualToString:@"marked"]) {
+			if (![pc.params containsObject:view.accessibilityLabel]) {
+				return NO;
+			}
+		} else if ([pc.name isEqualToString:@"first-child"]) {
+			UIView* first = [siblings objectAtIndex:0];
+			if (first != view) {
+				return NO;
+			}
+		} else if ([pc.name isEqualToString:@"last-child"]) {
+			UIView* last = [siblings lastObject];
+			if (last != view) {
+				return NO;
+			}
+		} else if ([pc.name isEqualToString:@"nth-child"]) {
+			NSUInteger index = [[pc.params objectAtIndex:0] intValue] - 1;
+			
+			if (index >= siblings.count) return NO;
+			
+			UIView* v = [view.superview.subviews objectAtIndex:index];
+			if (view != v) {
+				return NO;
+			}
+		} else if ([pc.name isEqualToString:@"tagged"]) {
+			NSNumber* tag = [NSNumber numberWithInt:view.tag];
+			if (![pc.params containsObject:tag]) {
+				return NO;
+			}
+		} else {
+			NSLog(@"unknown pseudo class: %@", pc.name);
+			return NO;
+		}
+	}
+	
+	return YES;
 }
 
 - (BOOL)testAttributesOfView:(UIView *)view attributeSelector:(STAttributeSelector*)attr {

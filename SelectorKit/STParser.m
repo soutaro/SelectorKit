@@ -205,6 +205,9 @@
 		if (self.nextToken.type == STT_Number) {
 			[params addObject:[NSNumber numberWithInt:[self.nextToken.value intValue]]];
 		}
+		if (self.nextToken.type == STT_String || self.nextToken.type == STT_Ident) {
+			[params addObject:self.nextToken.value];
+		}
 		[self advanceToken];
 		
 		if (self.nextToken.type == STT_Comma) {
