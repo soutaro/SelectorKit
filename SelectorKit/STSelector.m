@@ -54,18 +54,29 @@
 
 @synthesize type;
 @synthesize attributeName;
-@synthesize attributeValue;
+@synthesize attributeString;
+@synthesize attributeNumber;
 
 + (STAttributeSelector *)newExistAttributeSelectorWithName:(NSString *)name {
-	return [self newAttributeSelectorWithType:STA_Exist name:name value:nil];
+	return [self newAttributeSelectorWithType:STA_Exist name:name number:nil];
 }
 
-+ (STAttributeSelector *)newAttributeSelectorWithType:(STAttributeType)type name:(NSString *)name value:(NSString *)value {
++ (STAttributeSelector *)newAttributeSelectorWithType:(STAttributeType)type name:(NSString *)name string:(NSString *)value {
 	STAttributeSelector* sel = [[STAttributeSelector alloc] init];
 	
 	sel.type = type;
 	sel.attributeName = name;
-	sel.attributeValue = value;
+	sel.attributeString = value;
+	
+	return sel;
+}
+
++ (STAttributeSelector *)newAttributeSelectorWithType:(STAttributeType)type name:(NSString *)name number:(NSNumber *)value {
+	STAttributeSelector* sel = [[STAttributeSelector alloc] init];
+	
+	sel.type = type;
+	sel.attributeName = name;
+	sel.attributeNumber = value;
 	
 	return sel;
 }
@@ -80,13 +91,18 @@
 	BOOL result = YES;
 	result &= (a.type == self.type);
 	result &= (a.attributeName == nil && self.attributeName == nil) || [a.attributeName isEqualToString:self.attributeName];
-	result &= (a.attributeValue == nil && self.attributeValue == nil) || [a.attributeValue isEqualToString:self.attributeValue];
+	result &= (a.attributeNumber == nil && self.attributeNumber == nil) || [a.attributeNumber isEqualToNumber:self.attributeNumber];
+	result &= (a.attributeString == nil && self.attributeString == nil) || [a.attributeString isEqualToString:self.attributeString];
 	
 	return result;
 }
 
 - (NSString *)description {
 	if (self.type == STA_Exist) {
+		return self.attributeName;
+	}
+	
+	if (self.attributeNumber == nil && self.attributeString == nil) {
 		return self.attributeName;
 	}
 	
@@ -108,7 +124,8 @@
 			assert(NO);
 	}
 	
-	return [NSString stringWithFormat:@"%@%@%@", self.attributeName, op, self.attributeValue];
+	NSObject* value = self.attributeNumber ? self.attributeNumber : self.attributeString;
+	return [NSString stringWithFormat:@"%@%@%@", self.attributeName, op, value];
 }
 
 @end

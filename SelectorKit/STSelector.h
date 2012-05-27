@@ -31,10 +31,12 @@ typedef enum {
 
 @property (nonatomic) STAttributeType type;
 @property (nonatomic, strong) NSString* attributeName;
-@property (nonatomic, strong) NSString* attributeValue;
+@property (nonatomic, strong) NSString* attributeString;
+@property (nonatomic, strong) NSNumber* attributeNumber;
 
 + (STAttributeSelector*)newExistAttributeSelectorWithName:(NSString*)name;
-+ (STAttributeSelector*)newAttributeSelectorWithType:(STAttributeType)type name:(NSString *)name value:(NSString*)value;
++ (STAttributeSelector*)newAttributeSelectorWithType:(STAttributeType)type name:(NSString *)name string:(NSString*)value;
++ (STAttributeSelector*)newAttributeSelectorWithType:(STAttributeType)type name:(NSString *)name number:(NSNumber*)value;
 
 @end
 

@@ -170,12 +170,6 @@
 		if (self.nextToken.type == STT_Number) {
 			[params addObject:[NSNumber numberWithInt:[self.nextToken.value intValue]]];
 		}
-		if (self.nextToken.type == STT_True) {
-			[params addObject:[NSNumber numberWithBool:YES]];
-		}
-		if (self.nextToken.type == STT_False) {
-			[params addObject:[NSNumber numberWithBool:NO]];
-		}
 		[self advanceToken];
 		
 		if (self.nextToken.type == STT_Comma) {
@@ -219,13 +213,26 @@
 	
 	[self advanceToken];
 	
+	STAttributeSelector* selector = [STAttributeSelector newExistAttributeSelectorWithName:attributeName];
+	selector.type = type;
+	
+	if (self.nextToken.type == STT_True) {
+		selector.attributeNumber = [NSNumber numberWithBool:YES];
+	}
+	if (self.nextToken.type == STT_False) {
+		selector.attributeNumber = [NSNumber numberWithBool:NO];
+	}
 	if (self.nextToken.type == STT_String || self.nextToken.type == STT_Ident) {
 		NSString* value = self.nextToken.value;
-		[self advanceToken];
-		return [STAttributeSelector newAttributeSelectorWithType:type name:attributeName value:value];
+		selector.attributeString = value;
 	}
 	
-	abort();
+	if (self.nextToken.type == STT_Nil) {
+		// nothing to do
+	}
+	[self advanceToken];
+
+	return selector;
 }
 
 - (NSArray *)parseAttributeSelectors {

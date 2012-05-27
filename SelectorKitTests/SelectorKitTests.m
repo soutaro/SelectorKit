@@ -72,7 +72,7 @@
 	STSelector* expectedSelector = [[STSelector alloc] init];
 	expectedSelector.className = @"UILabel";
 	expectedSelector.pseudoClasses = [NSArray arrayWithObject:[STPseudoClass newPseudoClassWithType:@"nth-child" params:[NSArray arrayWithObject:[NSNumber numberWithInt:3]]]];
-	expectedSelector.attributeSelectors = [NSArray arrayWithObject:[STAttributeSelector newAttributeSelectorWithType:STA_Equal name:@"text" value:@"Hello"]];
+	expectedSelector.attributeSelectors = [NSArray arrayWithObject:[STAttributeSelector newAttributeSelectorWithType:STA_Equal name:@"text" string:@"Hello"]];
 	
 	STSelector* selector = [parser parseSelectorWithParent:nil];
 	STAssertEqualObjects(expectedSelector, selector, nil);
