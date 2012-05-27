@@ -8,3 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import <SelectorKit/STSelector.h>
+#import <SelectorKit/STLexer.h>
+#import <SelectorKit/STParser.h>
+#import <SelectorKit/SKViewSelector.h>

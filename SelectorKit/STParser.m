@@ -49,7 +49,7 @@
 }
 
 - (STSelector *)parseSelectorWithParent:(STSelector *)parent {
-	if (self.lexer.eof) {
+	if (!self.nextToken) {
 		return parent;
 	}
 	
@@ -67,6 +67,7 @@
 			type = STP_After;
 			[self advanceToken];
 			break;
+			
 		case STT_Plus:
 			type = STP_Next;
 			[self advanceToken];

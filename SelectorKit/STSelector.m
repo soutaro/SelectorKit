@@ -186,7 +186,7 @@
 		[result appendString:@"> "];
 	}
 	
-	if (self.isExactClassName) {
+	if (!self.isExactClassName) {
 		[result appendString:@"<:"];
 	}
 	
