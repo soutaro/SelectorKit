@@ -54,6 +54,7 @@ typedef enum {
 
 @property (nonatomic, strong) NSString* className;
 @property (nonatomic) BOOL isExactClassName;
+@property (nonatomic) BOOL isCursor;
 
 @property (nonatomic, strong) NSString* identifier;
 

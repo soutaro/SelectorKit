@@ -17,6 +17,8 @@
 - (void)assertTokenTypeAndAdvance:(STTokenType)type;
 - (void)assertTokenType:(STTokenType)type;
 
+- (STSelector*)markLastOneCursorIfNeeded:(STSelector*)selector;
+
 @end
 
 @implementation STParser
@@ -48,13 +50,31 @@
 	}
 }
 
+- (STSelector*)markLastOneCursorIfNeeded:(STSelector *)selector {
+	STSelector* x = selector;
+	BOOL cursorExist = NO;
+	while (x) {
+		if (x.isCursor) {
+			cursorExist = YES;
+			break;
+		}
+		x = selector.parent;
+	}
+	
+	if (!cursorExist) {
+		selector.isCursor = YES;
+	}
+
+	return selector;
+}
+
 - (STSelector *)parseSelectorWithParent:(STSelector *)parent {
 	if (!self.nextToken) {
-		return parent;
+		return [self markLastOneCursorIfNeeded:parent];
 	}
 	
 	if (self.nextToken.type == STT_Rparen) {
-		return parent;
+		return [self markLastOneCursorIfNeeded:parent];
 	}
 	
 	STParentType type = STP_Ancestor;
@@ -86,10 +106,11 @@
 - (STSelector *)parseSelectorComponent {
 	NSString* className = @"*";
 	
-	BOOL isExact = YES;
+	BOOL isExact = NO;
+	BOOL isCursor = NO;
 	
-	if (self.nextToken.type == STT_LtColon) {
-		isExact = NO;
+	if (self.nextToken.type == STT_LT) {
+		isExact = YES;
 		[self advanceToken];
 	}
 	
@@ -110,7 +131,6 @@
 				[self advanceToken];
 				NSArray* attrs = [self parseAttributeSelectors];
 				[self assertTokenTypeAndAdvance:STT_RBracket];
-				[self advanceToken];
 				[attributes addObjectsFromArray:attrs];
 				break;
 			}
@@ -136,12 +156,17 @@
 		}
 	}
 	
+	if (isExact) {
+		[self assertTokenTypeAndAdvance:STT_GT];
+	}
+	
 	STSelector* selector = [[STSelector alloc] init];
 	selector.className = className;
 	selector.isExactClassName = isExact;
 	selector.attributeSelectors = attributes;
 	selector.pseudoClasses = pseudoClasses;
 	selector.identifier = identifier;
+	selector.isCursor = isCursor;
 	
 	return selector;
 }

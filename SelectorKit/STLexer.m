@@ -111,7 +111,6 @@
 		return [STToken newTokenWithType:STT_Number	value:matchToken_];
 	}
 	
-	TestLiteral(@"<:", STT_LtColon);
 	TestLiteral(@"#", STT_Hash);
 	TestLiteral(@"[", STT_LBracket);
 	TestLiteral(@"]", STT_RBracket);
@@ -128,6 +127,7 @@
 	TestLiteral(@"(", STT_LParen);
 	TestLiteral(@")", STT_Rparen);
 	TestLiteral(@">", STT_GT);
+	TestLiteral(@"<", STT_LT);
 	TestLiteral(@"|", STT_VBar);
 	
 	return nil;

@@ -136,6 +136,7 @@
 @synthesize parentType;
 @synthesize className;
 @synthesize isExactClassName;
+@synthesize isCursor;
 @synthesize identifier;
 @synthesize pseudoClasses;
 @synthesize attributeSelectors;
@@ -161,6 +162,7 @@
 	result &= (self.parent == nil && selector.parent == nil) || [self.parent isEqual:selector.parent];
 	result &= [self.className isEqual:selector.className];
 	result &= (self.identifier == nil && selector.identifier == nil) || [self.identifier isEqual:selector.identifier];
+	result &= self.isCursor == selector.isCursor;
 	result &= self.isExactClassName == selector.isExactClassName;
 	result &= self.parentType == selector.parentType;
 	result &= [self.pseudoClasses isEqual:selector.pseudoClasses];
@@ -186,8 +188,13 @@
 		[result appendString:@"> "];
 	}
 	
-	if (!self.isExactClassName) {
-		[result appendString:@"<:"];
+	
+	if (self.isCursor) {
+		[result appendString:@"{"];
+	}
+	
+	if (self.isExactClassName) {
+		[result appendString:@"<"];
 	}
 	
 	[result appendString:self.className];
@@ -205,6 +212,14 @@
 	
 	if (self.identifier) {
 		[result appendFormat:@"#%@", self.identifier];
+	}
+	
+	if (self.isExactClassName) {
+		[result appendString:@">"];
+	}
+	
+	if (self.isCursor) {
+		[result appendString:@"}"];
 	}
 	
 	return result;

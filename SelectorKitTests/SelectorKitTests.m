@@ -27,7 +27,7 @@
 
 - (void)testLexer
 {
-	NSString* source = @"UIButton#close-button[isHidden=false]> :()nil 123not.,*=^=$=true false truely falsey\"hello'world\"'good' <:UIView";
+	NSString* source = @"UIButton#close-button[isHidden=false]> :()nil 123not.,*=^=$=true false truely falsey\"hello'world\"'good' <UIView";
 	
 	STLexer* lexer = [[STLexer alloc] initWithString:source];
 	
@@ -58,14 +58,14 @@
 	
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_String value:@"hello'world"], @"hello'world", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_String value:@"good"], @"good", nil);
-	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_LtColon], @"<:", nil);
+	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_LT], @"<", nil);
 	STAssertEqualObjects([lexer nextToken], [STToken newTokenWithType:STT_Ident value:@"UIView"], @"UIView", nil);
 	
 	STAssertEquals([lexer eof], YES, nil);
 }
 
 - (void)testParser {
-	NSString* source = @"<:UILabel:nth-child(3)[text=Hello]";
+	NSString* source = @"<UILabel:nth-child(3)[text=Hello]>";
 	STLexer* lexer = [[STLexer alloc] initWithString:source];
 	STParser* parser = [STParser newParserWithLexer:lexer];
 	
@@ -73,6 +73,8 @@
 	expectedSelector.className = @"UILabel";
 	expectedSelector.pseudoClasses = [NSArray arrayWithObject:[STPseudoClass newPseudoClassWithType:@"nth-child" params:[NSArray arrayWithObject:[NSNumber numberWithInt:3]]]];
 	expectedSelector.attributeSelectors = [NSArray arrayWithObject:[STAttributeSelector newAttributeSelectorWithType:STA_Equal name:@"text" string:@"Hello"]];
+	expectedSelector.isCursor = YES;
+	expectedSelector.isExactClassName = YES;
 	
 	STSelector* selector = [parser parseSelectorWithParent:nil];
 	STAssertEqualObjects(expectedSelector, selector, nil);
