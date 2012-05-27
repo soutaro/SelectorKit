@@ -50,7 +50,7 @@
 	
 	NSLog(@"selector = %@", selector);
 	
-	NSArray* views = [SKViewSelector selectViewsWithSelector:selector fromView:self.view];
+	NSArray* views = [SKViewSelectorEngine selectViewsWithSelector:selector fromView:self.view];
 	
 	for (UIView* view in views) {
 		UIView* filter = [[UIView alloc] initWithFrame:view.frame];

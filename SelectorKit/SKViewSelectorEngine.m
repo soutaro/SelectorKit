@@ -6,9 +6,9 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "SKViewSelector.h"
+#import "SKViewSelectorEngine.h"
 
-@interface SKViewSelector ()
+@interface SKViewSelectorEngine ()
 
 - (BOOL)testClassOfView:(UIView*)view selector:(STSelector*)selector;
 - (BOOL)testAttributesOfView:(UIView*)view attributeSelector:(STAttributeSelector*)attr;
@@ -17,14 +17,14 @@
 
 @end
 
-@implementation SKViewSelector {
+@implementation SKViewSelectorEngine {
 	NSMutableArray* views_;
 }
 
 @synthesize views = views_;
 
 + (NSArray *)selectViewsWithSelector:(STSelector *)selector fromView:(UIView *)view {
-	SKViewSelector* vs = [[SKViewSelector alloc] init];
+	SKViewSelectorEngine* vs = [[SKViewSelectorEngine alloc] init];
 	
 	[vs testView:view withSelector:selector];
 	

@@ -10,7 +10,7 @@
 
 #import "STSelector.h"
 
-@interface SKViewSelector : NSObject
+@interface SKViewSelectorEngine : NSObject
 
 @property (nonatomic, readonly) NSMutableArray* views;
 
