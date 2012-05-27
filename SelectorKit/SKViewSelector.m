@@ -40,9 +40,7 @@
 }
 
 - (void)testView:(UIView *)view withSelector:(STSelector *)selector {
-	if ([self testViewPath:view withSelector:selector]) {
-		[views_ addObject:view];
-	}
+	[self testViewPath:view withSelector:selector];
 	
 	for (UIView* subview in view.subviews) {
 		[self testView:subview withSelector:selector];
@@ -74,8 +72,10 @@
 		return NO;
 	}
 	
+	BOOL result = NO;
+	
 	if (!selector.parent) {
-		return YES;
+		result = YES;
 	}
 	
 	UIView* superview = view.superview;
@@ -83,12 +83,20 @@
 	
 	while (superview) {
 		if ([self testViewPath:superview withSelector:parentSelector]) {
-			return YES;
+			result = YES;
+			break;
 		}
 		superview = superview.superview;
 	}
 
-	return NO;
+	if (result) {
+		if (selector.isCursor) {
+			[views_ removeObject:view];
+			[views_ addObject:view];
+		}
+	}
+	
+	return result;
 }
 
 - (BOOL)testClassOfView:(UIView *)view selector:(STSelector *)selector {

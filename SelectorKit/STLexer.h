@@ -59,6 +59,10 @@ typedef enum {
 	STT_LT,
 	/** nil **/
 	STT_Nil,
+	/** { **/
+	STT_LBrace,
+	/** } **/
+	STT_RBrace,
 } STTokenType;
 
 @interface STToken : NSObject

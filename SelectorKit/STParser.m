@@ -58,7 +58,7 @@
 			cursorExist = YES;
 			break;
 		}
-		x = selector.parent;
+		x = x.parent;
 	}
 	
 	if (!cursorExist) {
@@ -109,6 +109,11 @@
 	BOOL isExact = NO;
 	BOOL isCursor = NO;
 	
+	if (self.nextToken.type == STT_LBrace) {
+		isCursor = YES;
+		[self advanceToken];
+	}
+	
 	if (self.nextToken.type == STT_LT) {
 		isExact = YES;
 		[self advanceToken];
@@ -158,6 +163,10 @@
 	
 	if (isExact) {
 		[self assertTokenTypeAndAdvance:STT_GT];
+	}
+	
+	if (isCursor) {
+		[self assertTokenTypeAndAdvance:STT_RBrace];
 	}
 	
 	STSelector* selector = [[STSelector alloc] init];

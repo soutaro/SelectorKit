@@ -129,6 +129,8 @@
 	TestLiteral(@">", STT_GT);
 	TestLiteral(@"<", STT_LT);
 	TestLiteral(@"|", STT_VBar);
+	TestLiteral(@"{", STT_LBrace);
+	TestLiteral(@"}", STT_RBrace);
 	
 	return nil;
 }
